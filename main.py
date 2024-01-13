@@ -21,12 +21,16 @@ shooter_image = pygame.image.load("shooter.png")
 shooter['x'] = (WIDTH - shooter['width']) // 2
 shooter['y'] = HEIGHT - shooter['height'] * 2
 
+
 # Create the game window
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption(TITLE)
 
 # Set up the game clock
 clock = pygame.time.Clock()
+
+# Font for displaying text
+font = pygame.font.Font(None, 20)
 
 # draw shooter object
 def draw_shooter(screen, shooter, angle):
@@ -38,7 +42,7 @@ def draw_shooter(screen, shooter, angle):
 def calculate_angle(shooter, mouse_pos):
     dx = mouse_pos[0] - (shooter['x'] + shooter['width'] // 2)
     dy = mouse_pos[1] - (shooter['y'] + shooter['height'] // 2)
-    return math.degrees(math.atan2(dx, dy))+180
+    return math.degrees(math.atan2(dx, dy)) + 180
 
 # Main game loop
 running = True
@@ -52,7 +56,7 @@ while running:
 
     # Draw
     # Clear the screen
-    screen.fill((0, 0, 0))  # Fill with a white background color, adjust as needed
+    screen.fill((0, 0, 0))  # Fill with a black background color, adjust as needed
 
     # Get the mouse position
     mouse_pos = pygame.mouse.get_pos()
@@ -62,6 +66,10 @@ while running:
 
     # Call the draw_shooter function with the calculated angle
     draw_shooter(screen, shooter, deg)
+
+    # Display the game version at the top-left corner
+    version_text = font.render(GAME_VERSION, True, (255, 255, 255))
+    screen.blit(version_text, (10, 10))
 
     # Refresh the display
     pygame.display.flip()
