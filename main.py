@@ -44,6 +44,12 @@ def calculate_angle(shooter, mouse_pos):
     dy = mouse_pos[1] - (shooter['y'] + shooter['height'] // 2)
     return math.degrees(math.atan2(dx, dy)) + 180
 
+# Function to render and display text
+def draw_text(screen, text, color, font_size, position):
+    font = pygame.font.Font(None, font_size)
+    text_surface = font.render(text, True, color)
+    screen.blit(text_surface, position)
+
 # Main game loop
 running = True
 while running:
@@ -68,8 +74,9 @@ while running:
     draw_shooter(screen, shooter, deg)
 
     # Display the game version at the top-left corner
-    version_text = font.render(GAME_VERSION, True, (255, 255, 255))
-    screen.blit(version_text, (10, 10))
+    draw_text(screen, GAME_VERSION, (255, 255, 255), 20, (10, 10))
+    draw_text(screen, f"{deg:.2f}°", (255, 255, 255), 20, (WIDTH-60, 10))
+
 
     # Refresh the display
     pygame.display.flip()
