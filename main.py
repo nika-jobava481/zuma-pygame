@@ -18,7 +18,7 @@ clock = pygame.time.Clock()
 
 # Create the shooter object
 shooter = Shooter((WIDTH - 30) // 2, HEIGHT - 90, 30, 60, screen)
-ball = Ball()
+ball = Ball(WIDTH // 2, HEIGHT - 60)
 
 
 # Main game loop
@@ -27,9 +27,12 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # On mouse click, shoot a ball from the shooter towards the cursor
+            ball.shoot(*pygame.mouse.get_pos(), speed=10)
 
     screen.fill((0, 0, 0))
-    
+
     # Get the mouse position
     mouse_pos = pygame.mouse.get_pos()
 
@@ -38,6 +41,10 @@ while running:
 
     # Draw the shooter
     shooter.draw(screen)
+
+    # Update and draw the ball
+    ball.update()  # Add an update method to Ball class
+    ball.draw(screen)
 
     # Display the game version at the top-left corner
     draw_text(screen, GAME_VERSION, (255, 255, 255), 20, (10, 10))
